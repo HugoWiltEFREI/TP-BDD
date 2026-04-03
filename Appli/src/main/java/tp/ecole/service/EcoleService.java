@@ -33,8 +33,8 @@ import java.sql.SQLException;
  */
 public class EcoleService {
 
-    // TODO : déclarez ici les DAOs dont le service a besoin
-    //        (ex. private ResultatDAO resultatDAO = new ResultatDAOImpl();)
+    // Déclaration du DAO utilisé par le service
+    private final ResultatDAO resultatDAO = new ResultatDAOImpl();
 
     /**
      * Inscrit un élève à un cours et lui attribue une note, de manière
@@ -48,8 +48,27 @@ public class EcoleService {
      *                      est annulée (note invalide, contrainte violée, etc.)
      */
     public void inscrireEtAttribuerNote(int numEleve, int numCours, double points) throws SQLException {
-        // TODO : implémenter la logique transactionnelle décrite ci-dessus
-        throw new UnsupportedOperationException("À implémenter — Question 6");
+        try (Connection conn = ConnectionManager.getConnection()) {
+            boolean previousAutoCommit = conn.getAutoCommit();
+            try {
+                conn.setAutoCommit(false);
+                resultatDAO.enregistrerInscription(numEleve, numCours);
+                resultatDAO.modifierNote(numEleve, numCours, points);
+                conn.commit();
+            } catch (SQLException ex) {
+                try {
+                    conn.rollback();
+                } catch (SQLException rbEx) {
+                    ex.addSuppressed(rbEx);
+                }
+                throw ex;
+            } finally {
+                try {
+                    conn.setAutoCommit(previousAutoCommit);
+                } catch (SQLException acEx) {
+                }
+            }
+        }
     }
 
     // ---------------------------------------------------------------
