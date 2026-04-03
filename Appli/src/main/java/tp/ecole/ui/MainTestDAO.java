@@ -38,13 +38,15 @@ public class MainTestDAO {
             // ÉTAPE 1 : Insertion
             // -------------------------------------------------
             System.out.println("--- Étape 1 : Insertion d'un élève de test ---");
-            Eleve nouvelEleve = new Eleve(); // TODO : adapter selon votre constructeur
-            // TODO : renseignez les attributs de nouvelEleve
-            //   nouvelEleve.setNumEleve(numEleve);
-            //   nouvelEleve.setNom("TestNom");
-            //   nouvelEleve.setPrenom("TestPrenom");
-            //   nouvelEleve.setAnnee(1);
-            //   ... etc.
+            Eleve nouvelEleve = new Eleve();
+            nouvelEleve.setNumEleve(999);
+            nouvelEleve.setNom("TestNom");
+            nouvelEleve.setPrenom("TestPrenom");
+            nouvelEleve.setDateNaissance(LocalDate.of(2005, 1, 1));
+            nouvelEleve.setPoids(60.0);
+            nouvelEleve.setAnnee(1);
+            nouvelEleve.setGenre("M");
+
             eleveDAO.save(nouvelEleve);
             System.out.println("[OK] Élève inséré : " + nouvelEleve);
 
@@ -67,8 +69,7 @@ public class MainTestDAO {
             // ÉTAPE 4 : Mise à jour
             // -------------------------------------------------
             System.out.println("\n--- Étape 4 : Modification du nom ---");
-            // TODO : modifier un attribut de nouvelEleve
-            //   nouvelEleve.setNom("NomModifie");
+            nouvelEleve.setNom("NomModifie");
             eleveDAO.update(nouvelEleve);
             Eleve apresModif = eleveDAO.findById(numEleve);
             System.out.println("[OK] Après modification : " + apresModif);

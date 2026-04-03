@@ -60,6 +60,7 @@ public class Eleve {
     }
 
     public void setNumEleve(int numEleve) {
+        this.numEleve = numEleve;
     }
 
     public String getNom() {
@@ -113,8 +114,15 @@ public class Eleve {
     // TODO : toString()
     @Override
     public String toString() {
-        return "Eleve : ID =" + getNumEleve() + ", nom =" + getNom() + ", prenom =" + getPrenom() +
-                "LocalDate de naissance =" + getDateNaissance() + ", poids =" + getPoids() + ", année =" + getAnnee() +
-                "genre =" + getGenre();
+        return String.format(
+                "Eleve [ID=%d, nom=%s, prenom=%s, dateNaissance=%s, poids=%.2f, annee=%d, genre=%s]",
+                getNumEleve(),
+                getNom(),
+                getPrenom(),
+                getDateNaissance(),
+                getPoids(),
+                getAnnee(),
+                getGenre()
+        );
     }
 }
